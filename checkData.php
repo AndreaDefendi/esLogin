@@ -1,6 +1,9 @@
 <?php
 $path = "scriptCredenziali.php";
 include($path);
+include("login.php");
+echo "Ciao ". $_COOKIE["user"] ."<br/>";
+echo "visite: ". $_COOKIE["session"] ."<br/>";
 ?>
 <html>
 <head>

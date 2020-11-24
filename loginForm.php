@@ -1,4 +1,16 @@
 <?php
+session_start();
+if(isset($_SESSION["visite"]))
+    $_SESSION["visite"] ++;
+else
+    $_SESSION["visite"] = 1;
+    
+    echo "visite: ". $_SESSION["visite"] ."<br/>";
+    //unset($_SESSION["visite"]);
+    //session_destroy();
+?>
+
+<?php
 print_r($_COOKIE);
 echo "<br/>";
 
@@ -9,7 +21,9 @@ if (isset($_COOKIE["user"])) {
 } else {
     echo "benvenuto per la prima volta";
 }
+setcookie("session",$_SESSION["visite"], time()+(60 * 60));
 // echo $_COOKIE["nome"];
+
 ?>
 
 <!DOCTYPE html>
