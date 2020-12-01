@@ -27,7 +27,7 @@ echo "visite: ". $_COOKIE["session"] ."<br/>";
                         $voti = split(fread($handle, filesize("voti.txt")),"\n");
                         for(n=0 ; n<$voti.length()) ; n++){
                             if(strstr($voti[n],':',true) == $_POST["username"]){
-                                echo "<h3 style=\"color:orange\>Voti". strstr($voti[n],':') ."</h3>"
+                                echo "<h2 style=\"color:orange\>Voti". strstr($voti[n],':') ."</h2>"
                             }
                         }
                     }
@@ -46,6 +46,10 @@ echo "visite: ". $_COOKIE["session"] ."<br/>";
                     }
                     if ($user == $loggedUser) {
                         $voti = substr($line, strpos($line, ":") + 1, strlen($line));
+                        $arrayStr = explode(';' , $voti);
+                        for(n=0 ; n<$arrayStr.lenght() ; n++ )
+                        $arrayVoti = strstr($arrayStr[n],'-', true); //prende ciò che si trova prima del carattere selezionato
+                        $arrayDate = strstr($arrayStr[n],'-'+1); //prende ciò che si trova dopo del carattere selezionato
                         break;
                     }
                 }
@@ -57,6 +61,19 @@ echo "visite: ". $_COOKIE["session"] ."<br/>";
             if (isset($_COOKIE["user"])) {
                 echo "<div class=\"container\"><h2>Benvenuto nella tua area dedicata, </h2>";
                 echo "<h1 style=\"color:green\">" . $_COOKIE["user"] . "</h1>";
+                echo "<table><tr><th>Voto</th></tr>";
+                foreach($arrayVoti as $voto && $arrayDate as $data){
+                    echo "<tr>";
+                    echo "<td>";
+                    echo $voto;
+                    echo "</td>";
+                    echo "<td>";
+                    echo $data;
+                    echo "</td>";
+                    echo "</tr>";
+                }
+                echo "</table>"
+                echo "<h2 style=\"color:orange\>Voti: ". $voti ."</h2>"
                 echo "</div>";
             } else {
                 if (isset($_CREDENZIALI[$_POST["username"]])) {
