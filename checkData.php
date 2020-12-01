@@ -21,6 +21,39 @@ echo "visite: ". $_COOKIE["session"] ."<br/>";
                     echo "<div class=\"container\"><h2>Benvenuto nella tua area dedicata, </h2>";
                     echo "<h1 style=\"color:green\">" . $_POST["username"] . "</h1>";
                     echo "</div>";
+
+/*                  if(exist("voti.txt") == true){
+                        $handle = fopen("voti.txt",'r');
+                        $voti = split(fread($handle, filesize("voti.txt")),"\n");
+                        for(n=0 ; n<$voti.length()) ; n++){
+                            if(strstr($voti[n],':',true) == $_POST["username"]){
+                                echo "<h3 style=\"color:orange\>Voti". strstr($voti[n],':') ."</h3>"
+                            }
+                        }
+                    }
+*/
+            $path = "voti.txt";
+            $voti;
+            if ($file = fopen($path, "r")) {
+                while (!feof($file)) {
+                    $line = fgets($file);
+                    $user = substr($line, 0, strpos($line, ":"));
+                    $loggedUser;
+                    if (isset($_COOKIE["user"])) {
+                        $loggedUser = $_COOKIE["user"];
+                    } else {
+                        $loggedUser = $_POST["username"];
+                    }
+                    if ($user == $loggedUser) {
+                        $voti = substr($line, strpos($line, ":") + 1, strlen($line));
+                        break;
+                    }
+                }
+                fclose($file);
+            } else {
+                echo "Impossibile aprire il file";
+            }
+
             if (isset($_COOKIE["user"])) {
                 echo "<div class=\"container\"><h2>Benvenuto nella tua area dedicata, </h2>";
                 echo "<h1 style=\"color:green\">" . $_COOKIE["user"] . "</h1>";
